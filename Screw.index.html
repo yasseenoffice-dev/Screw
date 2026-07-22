@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screw and Key LLC — Mobile Locksmith</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect x='4' y='4' width='112' height='112' rx='22' fill='%23132840' stroke='%234fa3d1' stroke-width='3'/%3E%3Cpath d='M42 50V38a18 18 0 0 1 36 0v12' stroke='%23c7d0d9' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Crect x='32' y='50' width='56' height='40' rx='7' fill='%234fa3d1'/%3E%3Ccircle cx='60' cy='66' r='4.5' fill='%230b1826'/%3E%3Crect x='58' y='66' width='4' height='12' fill='%230b1826'/%3E%3Crect x='88' y='64' width='16' height='12' rx='2.5' fill='%236fc0ec'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b1826;
+    --panel:#0f2033;
+    --panel2:#132840;
+    --panel3:#1a3350;
+    --silver:#c7d0d9;
+    --silver-bright:#e7edf2;
+    --steel-mid:#7c8fa3;
+    --accent:#4fa3d1;
+    --accent-bright:#6fc0ec;
+    --off-white:#eef2f5;
+    --line:rgba(199,208,217,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy);color:var(--off-white);
+    font-family:'Source Sans 3',sans-serif;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:0.01em;font-weight:600;}
+  .mono{font-family:'Space Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;}
+  ::selection{background:var(--accent);color:var(--navy);}
+  :focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- hours strip ---------- */
+  .hours-strip{
+    background:var(--panel3);border-bottom:1px solid var(--line);
+    font-family:'Space Mono',monospace;font-size:12.5px;color:var(--silver);
+  }
+  .hours-inner{max-width:1140px;margin:0 auto;padding:9px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .hours-inner span{color:var(--accent-bright);}
+
+  /* ---------- topbar ---------- */
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(11,24,38,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1140px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-size:20px;letter-spacing:0.02em;}
+  .nav-links{display:flex;gap:26px;font-size:14px;color:var(--silver);}
+  .nav-links a:hover{color:var(--off-white);}
+  .topbar-cta{display:flex;align-items:center;gap:9px;background:var(--accent);color:var(--navy);padding:10px 18px;border-radius:3px;font-family:'Space Mono',monospace;font-size:13.5px;font-weight:700;transition:background 0.15s ease;}
+  .topbar-cta:hover{background:var(--accent-bright);}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding:92px 32px 80px;border-bottom:1px solid var(--line);overflow:hidden;}
+  .hero-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.05fr 0.95fr;gap:60px;align-items:center;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:var(--accent-bright);text-transform:uppercase;margin-bottom:20px;}
+  .eyebrow::before{content:"";width:7px;height:7px;background:var(--accent);animation:blink 2s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .hero h1{font-size:clamp(36px,4.8vw,54px);line-height:1.05;color:var(--off-white);}
+  .hero h1 em{font-style:normal;color:var(--accent-bright);}
+  .hero p.sub{margin-top:20px;font-size:16.5px;color:var(--silver);max-width:46ch;}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:3px;font-size:15px;font-weight:600;transition:transform 0.15s ease,background 0.15s ease;}
+  .btn-primary{background:var(--accent);color:var(--navy);}
+  .btn-primary:hover{background:var(--accent-bright);transform:translateY(-1px);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--off-white);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent-bright);}
+  .stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:38px;max-width:460px;}
+  .stat-item{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--silver);}
+  .stat-item .dot{width:6px;height:6px;background:var(--accent);flex:none;}
+
+  /* signature: sliding deadbolt */
+  .bolt-stage{display:flex;align-items:center;justify-content:center;}
+  .bolt-svg{width:100%;max-width:380px;height:auto;}
+  .bolt{animation:slide 3s ease-in-out infinite;}
+  @keyframes slide{
+    0%,20%{transform:translateX(0);}
+    50%,70%{transform:translateX(64px);}
+    100%{transform:translateX(0);}
+  }
+  .strike-glow{animation:glow 3s ease-in-out infinite;}
+  @keyframes glow{
+    0%,45%{opacity:0;}
+    55%,70%{opacity:1;}
+    85%,100%{opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bolt,.strike-glow,.eyebrow::before{animation:none !important;}
+  }
+
+  /* ---------- about ---------- */
+  section{padding:84px 32px;}
+  .about-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .about-inner img{width:100%;height:340px;object-fit:cover;border-radius:2px;filter:grayscale(15%) contrast(1.05);}
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(27px,3.2vw,36px);color:var(--off-white);}
+  .section-head p{margin-top:14px;color:var(--silver);font-size:15.5px;}
+  .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;margin:26px 0;}
+  .feature-list div{font-size:14px;color:var(--off-white);padding-left:16px;border-left:2px solid var(--accent);}
+
+  /* ---------- services ---------- */
+  .services-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .service-card{background:var(--navy);padding:30px 24px;transition:background 0.2s ease;}
+  .service-card:hover{background:var(--panel2);}
+  .service-icon{width:100%;height:88px;margin-bottom:20px;}
+  .service-num{font-family:'Space Mono',monospace;font-size:12px;color:var(--accent);margin-bottom:16px;}
+  .service-card h3{font-size:17px;color:var(--off-white);margin-bottom:10px;}
+  .service-card ul{list-style:none;font-size:13.5px;color:var(--silver);}
+  .service-card li{padding:4px 0;border-top:1px solid var(--line);}
+  .service-card li:first-child{border-top:none;}
+
+  /* ---------- why + steps ---------- */
+  .why{background:var(--panel2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .why-inner{max-width:1140px;margin:0 auto;padding:84px 0;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:52px;}
+  .step-num{font-family:'Barlow Condensed',sans-serif;font-size:44px;color:var(--accent);opacity:0.55;line-height:1;margin-bottom:12px;}
+  .step h3{font-size:16px;color:var(--off-white);margin-bottom:8px;}
+  .step p{font-size:14px;color:var(--silver);}
+
+  /* ---------- coverage ---------- */
+  .area-photos{max-width:1140px;margin:0 auto 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .area-photos figure{margin:0;border:1px solid var(--line);overflow:hidden;border-radius:2px;}
+  .area-photos img{width:100%;height:180px;object-fit:cover;display:block;filter:grayscale(8%) contrast(1.05);}
+  .area-photos figcaption{padding:10px 14px;font-family:'Space Mono',monospace;font-size:11.5px;color:var(--silver);background:var(--panel2);}
+  @media (max-width:880px){.area-photos{grid-template-columns:1fr;}}
+  .coverage-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .area-card{border:1px solid var(--line);padding:18px 20px;font-size:14px;background:var(--panel2);}
+  .area-card .eta{font-family:'Space Mono',monospace;font-size:12px;color:var(--accent-bright);margin-top:6px;display:block;}
+
+  /* ---------- FAQ ---------- */
+  .faq{background:var(--panel2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .faq-inner{max-width:800px;margin:0 auto;padding:84px 0;}
+  details{border-bottom:1px solid var(--line);padding:20px 0;}
+  summary{cursor:pointer;font-size:16px;color:var(--off-white);list-style:none;display:flex;justify-content:space-between;align-items:center;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.01em;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+";color:var(--accent);font-size:20px;font-family:'Source Sans 3',sans-serif;}
+  details[open] summary::after{content:"–";}
+  details p{margin-top:12px;color:var(--silver);font-size:14.5px;max-width:65ch;}
+
+  /* ---------- testimonials ---------- */
+  .t-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .t-card{background:var(--navy);padding:28px 24px;}
+  .t-card .stars{color:var(--accent);font-size:13px;letter-spacing:2px;margin-bottom:14px;}
+  .t-card p{font-size:14.5px;color:var(--off-white);opacity:0.9;margin-bottom:16px;}
+  .t-card .who{font-family:'Space Mono',monospace;font-size:12px;color:var(--silver);}
+
+  /* ---------- final cta ---------- */
+  .final-cta{text-align:center;padding:96px 32px;}
+  .final-cta h2{font-size:clamp(28px,4.2vw,44px);color:var(--off-white);max-width:640px;margin:0 auto;}
+  .final-cta p{margin:16px auto 0;color:var(--silver);max-width:46ch;}
+  .final-cta .btn{margin-top:30px;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:40px 32px;}
+  .footer-inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:13px;color:var(--silver);}
+  .footer-inner .brand{font-size:16px;}
+
+  @media (max-width:880px){
+    .hero-grid{grid-template-columns:1fr;}
+    .bolt-stage{order:-1;max-width:260px;margin:0 auto 20px;}
+    .about-inner{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:1fr;gap:30px;}
+    .coverage-grid{grid-template-columns:repeat(2,1fr);}
+    .t-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .feature-list{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hours-strip">
+  <div class="hours-inner">
+    <div>Open <span>24 Hours</span></div>
+    <div>Serving <span>Pinellas, Pasco &amp; Hillsborough</span></div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 120 120" fill="none">
+        <rect x="4" y="4" width="112" height="112" rx="22" fill="#132840" stroke="#4fa3d1" stroke-width="3"/>
+        <path d="M42 50V38a18 18 0 0 1 36 0v12" stroke="#c7d0d9" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <rect x="32" y="50" width="56" height="40" rx="7" fill="#4fa3d1"/>
+        <circle cx="60" cy="66" r="4.5" fill="#0b1826"/>
+        <rect x="58" y="66" width="4" height="12" fill="#0b1826"/>
+        <rect x="88" y="64" width="16" height="12" rx="2.5" fill="#6fc0ec"/>
+      </svg>
+      Screw and Key LLC
+    </div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="topbar-cta" href="tel:+16193763124">☎ (619) 376-3124</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-grid wrap" style="padding:0;">
+    <div>
+      <div class="eyebrow">Mobile Locksmith — On Site Across the Metro</div>
+      <h1>Locked out?<br>We <em>lock it down</em> and go.</h1>
+      <p class="sub">Fully mobile locksmiths for homes, cars, and businesses across Pinellas, Pasco &amp; Hillsborough counties. No towing, no waiting rooms — we come to you and solve it on the spot.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="tel:+16193763124">☎ Call Now</a>
+        <a class="btn btn-ghost" href="#services">See what we do</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><span class="dot"></span>30 min lockout response</div>
+        <div class="stat-item"><span class="dot"></span>Car keys made on site</div>
+        <div class="stat-item"><span class="dot"></span>Same day home rekeys</div>
+        <div class="stat-item"><span class="dot"></span>Business security solutions</div>
+      </div>
+    </div>
+    <div class="bolt-stage">
+      <svg class="bolt-svg" viewBox="0 0 380 220" fill="none">
+        <rect x="20" y="80" width="120" height="60" rx="4" fill="#132840" stroke="#1a3350" stroke-width="1.5"/>
+        <rect class="bolt" x="140" y="98" width="90" height="24" rx="3" fill="#4fa3d1"/>
+        <rect x="255" y="70" width="70" height="80" rx="4" fill="#132840" stroke="#1a3350" stroke-width="1.5"/>
+        <rect x="270" y="98" width="40" height="24" rx="3" fill="#0b1826" stroke="#1a3350" stroke-width="1"/>
+        <rect class="strike-glow" x="270" y="98" width="40" height="24" rx="3" fill="none" stroke="#6fc0ec" stroke-width="2"/>
+        <text x="80" y="180" text-anchor="middle" fill="#7c8fa3" font-size="11" font-family="Space Mono" letter-spacing="1">DOOR</text>
+        <text x="290" y="180" text-anchor="middle" fill="#7c8fa3" font-size="11" font-family="Space Mono" letter-spacing="1">FRAME</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-inner wrap" style="padding:0;">
+    <div>
+      <div class="eyebrow">About Screw and Key</div>
+      <h2 style="font-size:clamp(26px,3vw,34px);margin-bottom:16px;">Trusted mobile locksmiths, built on speed.</h2>
+      <p style="color:var(--silver);font-size:15.5px;">A locally operated mobile locksmith team providing fast, reliable service for automotive, residential, and commercial lock and key needs — no shop visit required.</p>
+      <div class="feature-list">
+        <div>Mobile service, metro-wide</div>
+        <div>24/7 emergency lockouts</div>
+        <div>Home, car &amp; business coverage</div>
+        <div>Fast on-site response</div>
+      </div>
+      <div class="hero-actions" style="margin-top:8px;">
+        <a class="btn btn-primary" href="tel:+16193763124">☎ Call Now</a>
+        <a class="btn btn-ghost" href="#contact">Get Estimate</a>
+      </div>
+    </div>
+    <img src="https://images.unsplash.com/photo-1622037022824-0c71d511ef3c?q=80&w=1200&auto=format&fit=crop" alt="Mobile locksmith van on site">
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-head wrap" style="padding:0;">
+    <div class="eyebrow">What we handle</div>
+    <h2>Professional, mobile lock &amp; key solutions.</h2>
+    <p>Fast solutions for car, home, and business emergencies — one visit, no return trips.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 160 88" fill="none">
+        <path d="M18 62h124M28 62V50a6 6 0 0 1 6-6h10l10-16h32l10 16h10a6 6 0 0 1 6 6v12" stroke="#7c8fa3" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="28" y="46" width="104" height="16" rx="4" fill="#132840" stroke="#4fa3d1" stroke-width="2"/>
+        <circle cx="46" cy="62" r="8" fill="#0b1826" stroke="#c7d0d9" stroke-width="2.5"/>
+        <circle cx="114" cy="62" r="8" fill="#0b1826" stroke="#c7d0d9" stroke-width="2.5"/>
+        <g>
+          <rect x="122" y="18" width="26" height="14" rx="3" fill="#4fa3d1"/>
+          <circle cx="129" cy="25" r="3" fill="#0b1826"/>
+          <rect x="139" y="23" width="9" height="4" rx="1.5" fill="#6fc0ec"/>
+        </g>
+      </svg>
+      <div class="service-num mono">01</div>
+      <h3>Automotive</h3>
+      <ul>
+        <li>Emergency Car Lockouts</li>
+        <li>Car Key Replacement &amp; Cutting</li>
+        <li>Key Fob Programming</li>
+        <li>Ignition Repair</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 160 88" fill="none">
+        <path d="M32 44 68 18l36 26" stroke="#7c8fa3" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <rect x="38" y="44" width="60" height="34" fill="#132840" stroke="#3a3f47" stroke-width="1.5"/>
+        <rect x="60" y="52" width="16" height="26" fill="#0b1826" stroke="#4fa3d1" stroke-width="2"/>
+        <circle cx="70" cy="65" r="1.8" fill="#6fc0ec"/>
+        <rect x="100" y="34" width="20" height="44" fill="#1a3350" stroke="#3a3f47" stroke-width="1.5"/>
+        <rect x="105" y="40" width="4" height="4" fill="#7c8fa3"/>
+        <rect x="112" y="40" width="4" height="4" fill="#7c8fa3"/>
+        <rect x="105" y="48" width="4" height="4" fill="#7c8fa3"/>
+        <rect x="112" y="48" width="4" height="4" fill="#7c8fa3"/>
+      </svg>
+      <div class="service-num mono">02</div>
+      <h3>Residential</h3>
+      <ul>
+        <li>House Lockouts</li>
+        <li>Lock Rekeying &amp; Replacement</li>
+        <li>Smart Lock Installation</li>
+        <li>Broken Key Extraction</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 160 88" fill="none">
+        <rect x="46" y="14" width="68" height="64" fill="#132840" stroke="#3a3f47" stroke-width="1.5"/>
+        <rect x="56" y="24" width="10" height="10" fill="#7c8fa3"/>
+        <rect x="75" y="24" width="10" height="10" fill="#7c8fa3"/>
+        <rect x="94" y="24" width="10" height="10" fill="#7c8fa3"/>
+        <rect x="56" y="42" width="10" height="10" fill="#7c8fa3"/>
+        <rect x="94" y="42" width="10" height="10" fill="#7c8fa3"/>
+        <rect x="72" y="58" width="16" height="20" fill="#0b1826" stroke="#4fa3d1" stroke-width="2"/>
+        <rect x="72" y="66" width="16" height="5" fill="#4fa3d1"/>
+        <circle cx="80" cy="68.5" r="1.6" fill="#0b1826"/>
+      </svg>
+      <div class="service-num mono">03</div>
+      <h3>Commercial</h3>
+      <ul>
+        <li>Commercial Lockouts</li>
+        <li>Master Key Systems</li>
+        <li>Panic Bar Installation</li>
+        <li>Office Rekeying</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <svg class="service-icon" viewBox="0 0 160 88" fill="none">
+        <circle cx="70" cy="44" r="30" fill="#132840" stroke="#4fa3d1" stroke-width="2"/>
+        <path d="M70 44 70 26M70 44 82 50" stroke="#c7d0d9" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="70" cy="44" r="3" fill="#6fc0ec"/>
+        <g>
+          <rect x="106" y="30" width="20" height="26" rx="3" fill="#4fa3d1"/>
+          <path d="M110 30v-6a6 6 0 0 1 12 0v6" stroke="#c7d0d9" stroke-width="3" fill="none"/>
+          <circle cx="116" cy="41" r="2.5" fill="#0b1826"/>
+        </g>
+      </svg>
+      <div class="service-num mono">04</div>
+      <h3>Emergency</h3>
+      <ul>
+        <li>24/7 Emergency Lockouts</li>
+        <li>Lock Repair On the Spot</li>
+        <li>Fast Mobile Response</li>
+        <li>Urgent Rekey Service</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="why-inner wrap" style="padding:0;">
+    <div class="section-head" style="margin-bottom:0;">
+      <div class="eyebrow">The process</div>
+      <h2>From call to key in hand.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Call or request help</h3>
+        <p>Reach us anytime for emergency lockouts, key issues, or service requests.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Mobile locksmith dispatched</h3>
+        <p>A technician heads straight to your location — anywhere in the metro area.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>On-site solution</h3>
+        <p>We unlock, replace, repair, or program on the spot so you're back in fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="coverage">
+  <div class="section-head wrap" style="padding:0;">
+    <div class="eyebrow">Service area</div>
+    <h2>Wherever you are, we're already close.</h2>
+    <p>Mobile units stationed across Pinellas, Pasco &amp; Hillsborough counties for fast dispatch.</p>
+  </div>
+  <div class="area-photos">
+    <figure>
+      <img src="https://images.unsplash.com/photo-1614056905561-0004a2bb2b74?q=80&w=900&auto=format&fit=crop" alt="Tampa, Florida skyline">
+      <figcaption>HILLSBOROUGH COUNTY — TAMPA</figcaption>
+    </figure>
+    <figure>
+      <img src="https://images.unsplash.com/photo-1719008679968-a18ea5f01e44?q=80&w=900&auto=format&fit=crop" alt="Clearwater Beach, Florida at sunset">
+      <figcaption>PINELLAS COUNTY — CLEARWATER</figcaption>
+    </figure>
+    <figure>
+      <img src="https://images.unsplash.com/photo-1650416942198-35d0d4b7ccfa?q=80&w=900&auto=format&fit=crop" alt="St. Petersburg Pier, Florida">
+      <figcaption>PINELLAS COUNTY — ST. PETERSBURG</figcaption>
+    </figure>
+  </div>
+  <div class="coverage-grid">
+    <div class="area-card">Tampa<span class="eta mono">~10 min</span></div>
+    <div class="area-card">Clearwater<span class="eta mono">~14 min</span></div>
+    <div class="area-card">St. Petersburg<span class="eta mono">~13 min</span></div>
+    <div class="area-card">Largo<span class="eta mono">~16 min</span></div>
+    <div class="area-card">Brandon<span class="eta mono">~15 min</span></div>
+    <div class="area-card">Wesley Chapel<span class="eta mono">~20 min</span></div>
+    <div class="area-card">New Port Richey<span class="eta mono">~22 min</span></div>
+    <div class="area-card">Riverview<span class="eta mono">~17 min</span></div>
+  </div>
+</section>
+
+<section id="faq" class="faq">
+  <div class="faq-inner">
+    <div class="section-head" style="margin-bottom:36px;">
+      <div class="eyebrow">Got questions?</div>
+      <h2>We've got answers.</h2>
+    </div>
+    <details open>
+      <summary>How fast can you arrive?</summary>
+      <p>Most calls in the metro area get an on-site technician within 30 minutes, depending on traffic and location.</p>
+    </details>
+    <details>
+      <summary>How much does a locksmith service cost?</summary>
+      <p>Pricing depends on the job — we quote a flat price over the phone before anyone drives out, with no hidden add-ons.</p>
+    </details>
+    <details>
+      <summary>Can you make a new car key if I lost all my keys?</summary>
+      <p>Yes. We can cut and program a new key or fob on site for most makes and models, no original key required.</p>
+    </details>
+    <details>
+      <summary>Do you work on smart keys and push-to-start vehicles?</summary>
+      <p>Yes, our technicians carry programming equipment for transponder keys, fobs, and push-to-start systems.</p>
+    </details>
+    <details>
+      <summary>Do you charge extra for nights, weekends, or holidays?</summary>
+      <p>We quote the price up front regardless of time of day, so you'll know the total cost before we arrive.</p>
+    </details>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="section-head wrap" style="padding:0;">
+    <div class="eyebrow">Testimonials</div>
+    <h2>What customers say.</h2>
+  </div>
+  <div class="t-grid">
+    <div class="t-card">
+      <div class="stars">★★★★★</div>
+      <p>"Seamless from the first call. Technician was on site fast and had my door open in minutes without any damage."</p>
+      <div class="who mono">— Verified Customer</div>
+    </div>
+    <div class="t-card">
+      <div class="stars">★★★★★</div>
+      <p>"Rekeyed our whole office in one visit. Upfront pricing, no surprise fees — exactly what was quoted."</p>
+      <div class="who mono">— Verified Customer</div>
+    </div>
+    <div class="t-card">
+      <div class="stars">★★★★★</div>
+      <p>"Lost all my car keys and they cut a new one on the spot for less than the dealership quoted."</p>
+      <div class="who mono">— Verified Customer</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="final-cta">
+  <div class="eyebrow" style="justify-content:center;">Available right now</div>
+  <h2>Locked out? Let's latch you back in.</h2>
+  <p>One call gets a mobile technician headed your way with a flat quote in hand.</p>
+  <a class="btn btn-primary" href="tel:+16193763124">☎ Call Now</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="brand">Screw and Key LLC</div>
+    <div>latchandlockllc.com — Mobile locksmith for lockouts, key replacement &amp; on-site service.</div>
+    <div>© 2026 Screw and Key LLC. All Rights Reserved. Screw and Key LLC is operated by Screw &amp; Supply, LLC.</div>
+  </div>
+</footer>
+
+</body>
+</html>
